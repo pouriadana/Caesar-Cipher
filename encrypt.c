@@ -9,11 +9,12 @@
 /*Prototypes*/
 int readline(char *, int);
 char *encrypt_text(const char *, char *, int);
+char *decrypt_text(const char *, char *, int);
 
 int main(void)
 {
     char message[MSG_LEN] = {0};
-    char *encrypt;
+    char *encrypt, *decrypt;
     int chars_read = 0, key = 0;
 
     printf("Enter text for encryption: ");
@@ -26,6 +27,15 @@ int main(void)
 
     encrypt = encrypt_text(message, encrypt, key);
     printf("\n%s", encrypt);
+
+    /*Decryption*/
+    printf("Enter text for decryption: ");
+    chars_read = readline(message, MSG_LEN);
+    decrypt = malloc(sizeof(*message) * chars_read + 1);
+    if(decrypt == NULL)
+        exit(EXIT_FAILURE);
+    printf("Enter key to decrypt: ");
+    scanf(" %d", &key);
 
     return 0;
 }
