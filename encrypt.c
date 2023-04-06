@@ -26,7 +26,7 @@ int main(void)
     scanf(" %d", &key);
 
     encrypt = encrypt_text(message, encrypt, key);
-    printf("\n%s", encrypt);
+    printf("\n%s\n", encrypt);
 
     /*Decryption*/
     printf("Enter text for decryption: ");
@@ -38,7 +38,7 @@ int main(void)
     scanf(" %d", &key);
 
     decrypt = decrypt_text(message, decrypt, key);
-    printf("\n%s", decrypt);
+    printf("\n%s\n", decrypt);
 
     return 0;
 }
@@ -62,14 +62,10 @@ char *encrypt_text(const char *source, char *destination, int key)
     int wrapped = 0;
     while(*source != '\0'){
         if(65 <= *source && *source <= 90){
-            *destination = ((wrapped = *source - 65 + key) % 25) + 65;
-            if (wrapped > 25)
-                (*destination)--;
+            *destination = (*source - 65 + key) % 26 + 65;
         }
         else if(97 <= *source && *source <= 122){
-            *destination = ((wrapped = *source - 97 + key) % 25) + 97;
-            if (wrapped > 25)
-                (*destination)--;
+            *destination = (*source - 97 + key) % 26 + 97;
         }
         else
             *destination = *source;
