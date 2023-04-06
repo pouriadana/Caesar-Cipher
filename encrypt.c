@@ -15,22 +15,35 @@ void f_decrypt(void);
 
 int main(void)
 {
-    char message[MSG_LEN] = {0};
-    char *encrypt, *decrypt;
+    char message[MSG_LEN] = {0}, *encrypt, *decrypt, user_choice;
     int chars_read = 0, key = 0;
 
-    printf("Enter text for encryption: ");
-    chars_read = readline(message, MSG_LEN);
-    encrypt = malloc(sizeof(*message) * chars_read + 1);
-    if(encrypt == NULL)
-        exit(EXIT_FAILURE);
-    printf("Enter key to encrypt: ");
-    scanf(" %d", &key);
+    printf("Type (e) to start encrytion, or (d) to start decryption"
+    ",or (q) to quit the program.\n--> ");
+    scanf(" %c", &user_choice);
+    while(getchar() != '\n') ;
+    
+    switch(user_choice){
+        case 'q':   exit(EXIT_SUCCESS);
+                    break;
+        default :   break;
+    }
 
-    encrypt = encrypt_text(message, encrypt, key);
-    printf("\n%s\n", encrypt);
+    if(user_choice == 'e'){
+        printf("Enter text for encryption: ");
+        chars_read = readline(message, MSG_LEN);
+        encrypt = malloc(sizeof(*message) * chars_read + 1);
+        if(encrypt == NULL)
+            exit(EXIT_FAILURE);
+        printf("Enter key to encrypt: ");
+        scanf(" %d", &key);
+
+        encrypt = encrypt_text(message, encrypt, key);
+        printf("\n%s\n", encrypt);
+    }
 
     /*Decryption*/
+    else if(user_choice == 'd'){
     printf("Enter text for decryption: ");
     chars_read = readline(message, MSG_LEN);
     decrypt = malloc(sizeof(*message) * chars_read + 1);
@@ -41,6 +54,7 @@ int main(void)
 
     decrypt = decrypt_text(message, decrypt, key);
     printf("\n%s\n", decrypt);
+    }
 
     return 0;
 }
@@ -61,7 +75,6 @@ int readline(char *s, int n)
 char *encrypt_text(const char *source, char *destination, int key)
 {
     char *ch = destination;
-    int wrapped = 0;
     while(*source != '\0'){
         if(65 <= *source && *source <= 90){
             *destination = (*source - 65 + key) % 26 + 65;
