@@ -49,16 +49,14 @@ char *encrypt_text(const char *source, char *destination, int key)
     int wrapped = 0;
     while(*source != '\0'){
         if(65 <= *source && *source <= 90){
-            if(*source - 65 + key > 25)
-                *destination = ((*source - 65 + key) % 25) + 65 - 1;
-            else
-                *destination = ((*source - 65 + key) % 25) + 65;
+            *destination = ((wrapped = *source - 65 + key) % 25) + 65;
+            if (wrapped > 25)
+                (*destination)--;
         }
         else if(97 <= *source && *source <= 122){
-            if(*source - 97 + key > 25)
-                *destination = ((*source - 97 + key) % 25) + 97 - 1;
-            else
-                *destination = ((*source - 97 + key) % 25) + 97;
+            *destination = ((wrapped = *source - 97 + key) % 25) + 97;
+            if (wrapped > 25)
+                (*destination)--;
         }
         else
             *destination = *source;
