@@ -10,6 +10,8 @@
 int readline(char *, int);
 char *encrypt_text(const char *, char *, int);
 char *decrypt_text(const char *, char *, int);
+void f_encrypt(void);
+void f_decrypt(void);
 
 int main(void)
 {
