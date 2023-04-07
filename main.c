@@ -15,52 +15,50 @@ int main(void)
 {
     printf("Type (e) to start encrytion, or (d) to start decryption"
     ",or (q) to quit the program.\n");
+
     for(;;)
     {
-    char message[MSG_LEN] = {0}, *encrypt, *decrypt, user_choice;
-    int chars_read = 0, key = 0;
+        char message[MSG_LEN] = {0}, *encrypt, *decrypt, user_choice;
+        int chars_read = 0, key = 0;
 
-    printf("Enter command (e,d,q): \n--> ");    
-    scanf(" %c", &user_choice);
-    while(getchar() != '\n') ;
+        printf("Enter command (e,d,q): \n--> ");    
+        scanf(" %c", &user_choice);
+        while(getchar() != '\n') ; //Any letter after the first letter is discarded
 
-    switch(user_choice){
-        case 'q':   exit(EXIT_SUCCESS);
-                    break;
-        default :   break;
+        switch(tolower(user_choice)){
+            case 'q':   exit(EXIT_SUCCESS);
+                        break;
+
+            case 'e':   {/*Encryption*/
+                        printf("Enter text for encryption: ");
+                        chars_read = readline(message, MSG_LEN);
+                        encrypt = malloc(sizeof(*message) * chars_read + 1);
+                        if(encrypt == NULL)
+                            exit(EXIT_FAILURE);
+                        printf("Enter key to encrypt (0-25): ");
+                        scanf(" %d", &key);
+
+                        encrypt = encrypt_text(message, encrypt, key);
+                        printf("\n%s\n", encrypt);
+                        break;
+            }
+            case 'd':   {/*Decryption*/
+                        printf("Enter text for decryption: ");
+                        chars_read = readline(message, MSG_LEN);
+                        decrypt = malloc(sizeof(*message) * chars_read + 1);
+                        if(decrypt == NULL)
+                            exit(EXIT_FAILURE);
+                        printf("Enter key to decrypt: ");
+                        scanf(" %d", &key);
+
+                        decrypt = decrypt_text(message, decrypt, key);
+                        printf("\n%s\n", decrypt);
+                        break;
+            }
+            default :   printf("Invalid Input... Try again.\n");
+                        break;
+        }
     }
-
-    /*Encryption*/
-    if(user_choice == 'e'){
-        printf("Enter text for encryption: ");
-        chars_read = readline(message, MSG_LEN);
-        encrypt = malloc(sizeof(*message) * chars_read + 1);
-        if(encrypt == NULL)
-            exit(EXIT_FAILURE);
-        printf("Enter key to encrypt (0-25): ");
-        scanf(" %d", &key);
-
-        encrypt = encrypt_text(message, encrypt, key);
-        printf("\n%s\n", encrypt);
-    }
-
-    /*Decryption*/
-    else if(user_choice == 'd'){
-    printf("Enter text for decryption: ");
-    chars_read = readline(message, MSG_LEN);
-    decrypt = malloc(sizeof(*message) * chars_read + 1);
-    if(decrypt == NULL)
-        exit(EXIT_FAILURE);
-    printf("Enter key to decrypt: ");
-    scanf(" %d", &key);
-
-    decrypt = decrypt_text(message, decrypt, key);
-    printf("\n%s\n", decrypt);
-    }
-    else
-        printf("Invalid Input... Try again.\n");
-    }
-
     return 0;
 }
 
