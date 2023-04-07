@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include "encrypt.h"
 
 /*Macros*/
 #define MSG_LEN 1000
 
 /*Prototypes*/
 int readline(char *, int);
+char *encrypt_text(const char *, char *, int);
 char *decrypt_text(const char *, char *, int);
 
 int main(void)
@@ -73,6 +73,24 @@ int readline(char *s, int n)
     }
     s[pos] = '\0';
     return pos;
+}
+
+char *encrypt_text(const char *source, char *destination, int key)
+{
+    char *ch = destination;
+    while(*source != '\0'){
+        if(65 <= *source && *source <= 90){
+            *destination = (*source - 65 + key) % 26 + 65;
+        }
+        else if(97 <= *source && *source <= 122){
+            *destination = (*source - 97 + key) % 26 + 97;
+        }
+        else
+            *destination = *source;
+        destination++, source++;
+    }
+    *destination = '\0';
+    return ch;
 }
 
 char *decrypt_text(const char *source, char *destination, int key)
