@@ -1,15 +1,21 @@
+/* A Caesarian encryption/decryption program.    *
+*  Written by Pouria Dana                        *
+*  pouriadana73@gmail.com                        *
+*  April 7, 2023                                 *
+*  This code is licensed by the GPL v.3 standard */
+
 /*Include*/
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include "encrypt.h"
+#include "decrypt.h"
 
 /*Macros*/
 #define MSG_LEN 1000
 
 /*Prototypes*/
 int readline(char *, int);
-char *decrypt_text(const char *, char *, int);
 
 int main(void)
 {
@@ -73,28 +79,4 @@ int readline(char *s, int n)
     }
     s[pos] = '\0';
     return pos;
-}
-
-char *decrypt_text(const char *source, char *destination, int key)
-{
-    char *ch = destination;
-    while(*source != '\0'){
-        if(65 <= *source && *source <= 90){
-            if((*source - 65 - key) >= 0)
-                *destination = *source - key;
-            else
-                *destination = 90 + (*source - 65 - key) + 1;
-        }
-        else if(97 <= *source && *source <= 122){
-            if((*source - 97 - key) >= 0)
-                *destination = *source - key;
-            else
-                *destination = 122 + (*source - 97 - key) + 1;
-        }
-        else
-            *destination = *source;
-        *destination++, *source++;
-    }
-    *destination = '\0';
-    return ch;
 }
