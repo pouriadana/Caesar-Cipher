@@ -1,3 +1,9 @@
+/* A Caesarian encryption/decryption program.    *
+*  Written by Pouria Dana                        *
+*  pouriadana73@gmail.com                        *
+*  April 7, 2023                                 *
+*  This code is licensed by the GPL v.3 standard */
+
 /*Include*/
 #include <stdio.h>
 #include <ctype.h>
