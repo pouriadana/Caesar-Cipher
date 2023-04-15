@@ -9,20 +9,15 @@ char *decrypt_text(const char *source, char *destination, int key)
     char *ch = destination;
     while(*source != '\0'){
         if(65 <= *source && *source <= 90){
-            if((*source - 65 - key) >= 0)
-                *destination = *source - key;
-            else
-                *destination = 90 + (*source - 65 - key) + 1;
+            *destination = (*source - 65 + 26 - key) % 26 + 65;
         }
         else if(97 <= *source && *source <= 122){
-            if((*source - 97 - key) >= 0)
-                *destination = *source - key;
-            else
-                *destination = 122 + (*source - 97 - key) + 1;
+            *destination = (*source - 97 + 26 - key) % 26 + 97;
         }
         else
             *destination = *source;
-        *destination++, *source++;
+        *destination++; 
+        *source++;
     }
     *destination = '\0';
     return ch;
