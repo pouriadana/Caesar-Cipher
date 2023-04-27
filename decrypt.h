@@ -2,17 +2,19 @@
 #define DECRYPT_F
 #include <stdio.h>
 
+#define ALPHABET_LEN 26
+
 char *decrypt_text(const char *, char *, int);
 
 char *decrypt_text(const char *source, char *destination, int key)
 {
     char *ch = destination;
     while(*source != '\0'){
-        if(65 <= *source && *source <= 90){
-            *destination = (*source - 65 + 26 - key) % 26 + 65;
+        if('A' <= *source && *source <= 'Z'){
+            *destination = (*source - 'A' + ALPHABET_LEN - key) % ALPHABET_LEN + 'A';
         }
-        else if(97 <= *source && *source <= 122){
-            *destination = (*source - 97 + 26 - key) % 26 + 97;
+        else if('a' <= *source && *source <= 'z'){
+            *destination = (*source - 'a' + ALPHABET_LEN - key) % ALPHABET_LEN + 'a';
         }
         else
             *destination = *source;
